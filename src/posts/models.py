@@ -29,6 +29,9 @@ class Post(models.Model):
     categories = models.ManyToManyField(Category)
     top_stories = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
+    review = models.BooleanField(default=False)
+    video = models.BooleanField(default=False)
+    videolink = models.URLField(max_length=250, null=True, blank=True)
 
     def __str__(self):
         return self.title
