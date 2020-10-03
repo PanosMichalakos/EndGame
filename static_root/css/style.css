@@ -519,13 +519,17 @@ ol {
 }
 
 .hero-item h2 {
-  font-size: 160px;
+  font-size: 70px;
   color: #fff;
   font-weight: 500;
   line-height: 1;
   position: relative;
   top: 100px;
   opacity: 0;
+}
+
+#title {
+  font-size: 70px;
 }
 
 .hero-item p {

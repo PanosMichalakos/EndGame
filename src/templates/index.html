@@ -8,23 +8,21 @@
 <!-- Hero section -->
 <section class="hero-section overflow-hidden">
   <div class="hero-slider owl-carousel">
+    {% for obj in object_list %}
     <div
       class="hero-item set-bg d-flex align-items-center justify-content-center text-center"
       data-setbg="{% static 'img/slider-bg-1.jpg' %}"
     >
       <div class="container">
-        <h2>Game on!</h2>
-        <p>
-          Fusce erat dui, venenatis et erat in, vulputate dignissim lacus. Donec
-          vitae tempus dolor,<br />sit amet elementum lorem. Ut cursus tempor
-          turpis.
-        </p>
+        <h2 style="font-size: 4rem">{{ obj.title }}</h2>
+        <p>{{ obj.overview }}</p>
         <a href="#" class="site-btn"
           >Read More
           <img src="{% static 'img/icons/double-arrow.png' %}" alt="#"
         /></a>
       </div>
     </div>
+    {% endfor %} {% comment %}
     <div
       class="hero-item set-bg d-flex align-items-center justify-content-center text-center"
       data-setbg="{% static 'img/slider-bg-2.jpg' %}"
@@ -42,6 +40,7 @@
         /></a>
       </div>
     </div>
+    {% endcomment %}
   </div>
 </section>
 <!-- Hero section end-->
