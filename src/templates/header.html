@@ -15,19 +15,19 @@
         <img src="{% static './img/logo.png' %}" alt="" />
       </a>
       <nav class="top-nav-area w-100">
-        <div class="user-panel">
-          <a href="">Login</a> / <a href="">Register</a>
-        </div>
+        <div class="user-panel"><a href="">Login</a> / <a href="">Register</a></div>
         <!-- Menu -->
         <ul class="main-menu primary-menu">
           <li><a href="/">Home</a></li>
+          {% comment %}
           <li>
             <a href="/games">Games</a>
             <ul class="sub-menu">
               <li><a href="/post">Game Singel</a></li>
             </ul>
           </li>
-          <li><a href="/reviews">Reviews</a></li>
+          {% endcomment %}
+          <li><a href="/reviewslist">Reviews</a></li>
           <li><a href="/blog">News</a></li>
           <li><a href="/contact">Contact</a></li>
         </ul>

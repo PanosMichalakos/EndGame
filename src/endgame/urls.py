@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from posts.views import index, blog, post, contact, games
+from posts.views import index, blog, post, contact, games, reviewslist
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -11,6 +11,7 @@ urlpatterns = [
     path('post/', post),
     path('contact/', contact),
     path('games/', games),
+    path('reviewslist/', reviewslist)
 
 ]
 

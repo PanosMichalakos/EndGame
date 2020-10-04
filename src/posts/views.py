@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Post
+from marketing.models import Signup
 
 
 def index(request):
@@ -9,6 +10,12 @@ def index(request):
     topnews = Post.objects.filter(top_stories=True)
     latestvideo = Post.objects.filter(video=True).order_by('-timestamp')[0:1]
     latestreview = Post.objects.filter(review=True).order_by('-timestamp')[0:1]
+    if request.method == "POST":
+        email = request.POST["email"]
+        new_signup = Signup()
+        new_signup.email = email
+        new_signup.save()
+
     context = {
         'object_list': featured,
         'latest': latest,
@@ -34,3 +41,7 @@ def contact(request):
 
 def games(request):
     return render(request, 'games.html', {})
+
+
+def reviewslist(request):
+    return render(request, 'reviewslist.html')
