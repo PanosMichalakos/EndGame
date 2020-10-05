@@ -6,15 +6,12 @@
 </div>
 
 <!-- Page top section -->
-<section
-  class="page-top-section set-bg"
-  data-setbg="{% static 'img/page-top-bg/3.jpg' %}"
->
+<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/3.jpg' %}">
   <div class="page-info">
     <h2>Blog</h2>
     <div class="site-breadcrumb">
-      <a href="">Home</a> /
-      <span>Blog</span>
+      <a href="/">Home</a> /
+      <span>News</span>
     </div>
   </div>
 </section>
@@ -31,137 +28,82 @@
           <li><a href="#">Strategy</a></li>
           <li><a href="#">Online</a></li>
         </ul>
+        {% for obj in queryset %}
         <div class="big-blog-item">
-          <img
-            src="{% static 'img/blog-big/1.jpg' %}"
-            alt="#"
-            class="blog-thumbnail"
-          />
+          <img src="{{ obj.thumbnail.url }}" alt="#" class="blog-thumbnail" />
           <div class="blog-content text-box text-white">
-            <div class="top-meta">11.11.18 / in <a href="">Games</a></div>
-            <h3>The best VR games on the market</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-              ipsum suspendisse ultrices gravida. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua.....
-            </p>
-            <a href="#" class="read-more"
-              >Read More
-              <img src="{% static 'img/icons/double-arrow.png' %}" alt="#"
-            /></a>
+            <div class="top-meta">
+              {{ obj.timestamp.date }} / in {% for cat in obj.categories.all %}
+              <a href="">{{ cat }}</a>
+              {% endfor %}
+            </div>
+            <h3>{{ obj.title }}</h3>
+            <p>{{ obj.overview }}</p>
+            <a href="{{ obj.get_absolute_url }}" class="read-more"
+              >Read More <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" />
+            </a>
           </div>
         </div>
-        <div class="big-blog-item">
-          <img
-            src="{% static 'img/blog-big/2.jpg' %}"
-            alt="#"
-            class="blog-thumbnail"
-          />
-          <div class="blog-content text-box text-white">
-            <div class="top-meta">11.11.18 / in <a href="">Games</a></div>
-            <h3>The best online game is out now!</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-              ipsum suspendisse ultrices gravida. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua.....
-            </p>
-            <a href="#" class="read-more"
-              >Read More
-              <img src="{% static 'img/icons/double-arrow.png' %}" alt="#"
-            /></a>
-          </div>
-        </div>
-        <div class="big-blog-item">
-          <img
-            src="{% static 'img/blog-big/3.jpg' %}"
-            alt="#"
-            class="blog-thumbnail"
-          />
-          <div class="blog-content text-box text-white">
-            <div class="top-meta">11.11.18 / in <a href="">Games</a></div>
-            <h3>The best online game is out now!</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-              ipsum suspendisse ultrices gravida. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-              labore et dolore magna aliqua.....
-            </p>
-            <a href="#" class="read-more"
-              >Read More
-              <img src="{% static 'img/icons/double-arrow.png' %}" alt="#"
-            /></a>
-          </div>
-        </div>
+        {% endfor %}
         <div class="site-pagination">
-          <a href="#" class="active">01.</a>
-          <a href="#">02.</a>
-          <a href="#">03.</a>
+          {% if queryset.has_previous %}
+          <a href="?{{ page_request_var }}={{ queryset.previous_page_number }}">
+            <img src="{% static 'img/icons/double-arrow2.png' %}" alt="#" />
+          </a>
+          <a href="?{{ page_request_var }}={{ queryset.previous_page_number }}">
+            {{ queryset.previous_page_number }}
+          </a>
+          {% endif %}
+          <a href="?{{ page_request_var }}={{ queryset.number }}" class="active">
+            {{ queryset.number }}
+          </a>
+          {% if queryset.has_next %}
+          <a href="?{{ page_request_var }}={{ queryset.next_page_number }}">
+            {{ queryset.next_page_number }}
+          </a>
+          <a href="?{{ page_request_var }}={{ queryset.next_page_number }}">
+            <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" />
+          </a>
+          {% endif %}
         </div>
       </div>
       <div class="col-xl-3 col-lg-4 col-md-5 sidebar">
         <div id="stickySidebar">
           <div class="widget-item">
-            <form class="search-widget">
-              <input type="text" />
+            <form class="search-widget" action="{% url 'search' %}">
+              <input type="text" name="q" />
               <button>search</button>
             </form>
           </div>
           <div class="widget-item">
             <h4 class="widget-title">Trending</h4>
             <div class="trending-widget">
+              {% for obj in trending %}
               <div class="tw-item">
                 <div class="tw-thumb">
-                  <img src="{% static './img/blog-widget/1.jpg' %}" alt="#" />
+                  <img src="{{ obj.thumbnail.url }}" width="80px" alt="#" />
                 </div>
                 <div class="tw-text">
-                  <div class="tw-meta">11.11.18 / in <a href="">Games</a></div>
-                  <h5>The best online game is out now!</h5>
+                  <div class="tw-meta">
+                    {{ obj.timestamp.date }} / in {% for cat in obj.categories.all %}
+                    <a href="">{{ cat }}</a>
+                    {% endfor %}
+                  </div>
+                  <h5>{{ obj.title }}</h5>
                 </div>
               </div>
-              <div class="tw-item">
-                <div class="tw-thumb">
-                  <img src="{% static './img/blog-widget/2.jpg' %}" alt="#" />
-                </div>
-                <div class="tw-text">
-                  <div class="tw-meta">11.11.18 / in <a href="">Games</a></div>
-                  <h5>The best online game is out now!</h5>
-                </div>
-              </div>
-              <div class="tw-item">
-                <div class="tw-thumb">
-                  <img src="{% static './img/blog-widget/3.jpg' %}" alt="#" />
-                </div>
-                <div class="tw-text">
-                  <div class="tw-meta">11.11.18 / in <a href="">Games</a></div>
-                  <h5>The best online game is out now!</h5>
-                </div>
-              </div>
-              <div class="tw-item">
-                <div class="tw-thumb">
-                  <img src="{% static './img/blog-widget/4.jpg' %}" alt="#" />
-                </div>
-                <div class="tw-text">
-                  <div class="tw-meta">11.11.18 / in <a href="">Games</a></div>
-                  <h5>The best online game is out now!</h5>
-                </div>
-              </div>
+              {% endfor %}
             </div>
           </div>
           <div class="widget-item">
             <div class="categories-widget">
               <h4 class="widget-title">categories</h4>
               <ul>
-                <li><a href="">Games</a></li>
-                <li><a href="">Gaming Tips & Tricks</a></li>
-                <li><a href="">Online Games</a></li>
-                <li><a href="">Team Games</a></li>
-                <li><a href="">Community</a></li>
-                <li><a href="">Uncategorized</a></li>
+                {% for cat in category_count %}
+                <li>
+                  <a href="">{{ cat.categories__title }}: {{ cat.categories__title__count }}</a>
+                </li>
+                {% endfor %}
               </ul>
             </div>
           </div>
@@ -169,47 +111,27 @@
             <h4 class="widget-title">Latest Comments</h4>
             <div class="latest-comments">
               <div class="lc-item">
-                <img
-                  src="{% static './img/blog-widget/1.jpg' %}"
-                  class="lc-avatar"
-                  alt="#"
-                />
+                <img src="{% static './img/blog-widget/1.jpg' %}" class="lc-avatar" alt="#" />
                 <div class="tw-text">
-                  <a href="">Maria Smith</a> <span>On</span> The best online
-                  game out there
+                  <a href="">Maria Smith</a> <span>On</span> The best online game out there
                 </div>
               </div>
               <div class="lc-item">
-                <img
-                  src="{% static './img/blog-widget/2.jpg' %}"
-                  class="lc-avatar"
-                  alt="#"
-                />
+                <img src="{% static './img/blog-widget/2.jpg' %}" class="lc-avatar" alt="#" />
                 <div class="tw-text">
-                  <a href="">Maria Smith</a> <span>On</span> The best online
-                  game out there
+                  <a href="">Maria Smith</a> <span>On</span> The best online game out there
                 </div>
               </div>
               <div class="lc-item">
-                <img
-                  src="{% static './img/blog-widget/3.jpg' %}"
-                  class="lc-avatar"
-                  alt="#"
-                />
+                <img src="{% static './img/blog-widget/3.jpg' %}" class="lc-avatar" alt="#" />
                 <div class="tw-text">
-                  <a href="">Maria Smith</a> <span>On</span> The best online
-                  game out there
+                  <a href="">Maria Smith</a> <span>On</span> The best online game out there
                 </div>
               </div>
               <div class="lc-item">
-                <img
-                  src="{% static './img/blog-widget/4.jpg' %}"
-                  class="lc-avatar"
-                  alt="#"
-                />
+                <img src="{% static './img/blog-widget/4.jpg' %}" class="lc-avatar" alt="#" />
                 <div class="tw-text">
-                  <a href="">Maria Smith</a> <span>On</span> The best online
-                  game out there
+                  <a href="">Maria Smith</a> <span>On</span> The best online game out there
                 </div>
               </div>
             </div>

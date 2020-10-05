@@ -1,0 +1,166 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<!-- Page Preloder -->
+<div id="preloder">
+  <div class="loader"></div>
+</div>
+
+<!-- Page top section -->
+<section class="page-top-section set-bg" data-setbg="{% static 'img/page-top-bg/3.jpg' %}">
+  <div class="page-info">
+    <h2>Search Results</h2>
+    <div class="site-breadcrumb">
+      <a href="/">Home</a> /
+      <span>Search Results</span>
+    </div>
+  </div>
+</section>
+<!-- Page top end-->
+
+<!-- Blog page -->
+<section class="blog-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 col-lg-8 col-md-7">
+        <ul class="blog-filter">
+          <li><a href="#">Racing</a></li>
+          <li><a href="#">Shooters</a></li>
+          <li><a href="#">Strategy</a></li>
+          <li><a href="#">Online</a></li>
+        </ul>
+        {% for obj in queryset %}
+        <div class="big-blog-item">
+          <img src="{{ obj.thumbnail.url }}" alt="#" class="blog-thumbnail" />
+          <div class="blog-content text-box text-white">
+            <div class="top-meta">
+              {{ obj.timestamp.date }} / in {% for cat in obj.categories.all %}
+              <a href="">{{ cat }}</a>
+              {% endfor %}
+            </div>
+            <h3>{{ obj.title }}</h3>
+            <p>{{ obj.overview }}</p>
+            <a href="{{ obj.get_absolute_url }}" class="read-more"
+              >Read More <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" />
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="site-pagination">
+          {% if queryset.has_previous %}
+          <a href="?{{ page_request_var }}={{ queryset.previous_page_number }}">
+            <img src="{% static 'img/icons/double-arrow2.png' %}" alt="#" />
+          </a>
+          <a href="?{{ page_request_var }}={{ queryset.previous_page_number }}">
+            {{ queryset.previous_page_number }}
+          </a>
+          {% endif %}
+          <a href="?{{ page_request_var }}={{ queryset.number }}" class="active">
+            {{ queryset.number }}
+          </a>
+          {% if queryset.has_next %}
+          <a href="?{{ page_request_var }}={{ queryset.next_page_number }}">
+            {{ queryset.next_page_number }}
+          </a>
+          <a href="?{{ page_request_var }}={{ queryset.next_page_number }}">
+            <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" />
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-4 col-md-5 sidebar">
+        <div id="stickySidebar">
+          <div class="widget-item">
+            <form class="search-widget" action="{% url 'search' %}">
+              <input type="text" name="q" />
+              <button>search</button>
+            </form>
+          </div>
+          <div class="widget-item">
+            <h4 class="widget-title">Trending</h4>
+            <div class="trending-widget">
+              {% for obj in trending %}
+              <div class="tw-item">
+                <div class="tw-thumb">
+                  <img src="{{ obj.thumbnail.url }}" width="80px" alt="#" />
+                </div>
+                <div class="tw-text">
+                  <div class="tw-meta">
+                    {{ obj.timestamp.date }} / in {% for cat in obj.categories.all %}
+                    <a href="">{{ cat }}</a>
+                    {% endfor %}
+                  </div>
+                  <h5>{{ obj.title }}</h5>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="widget-item">
+            <div class="categories-widget">
+              <h4 class="widget-title">categories</h4>
+              <ul>
+                {% for cat in category_count %}
+                <li>
+                  <a href="">{{ cat.categories__title }}: {{ cat.categories__title__count }}</a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="widget-item">
+            <h4 class="widget-title">Latest Comments</h4>
+            <div class="latest-comments">
+              <div class="lc-item">
+                <img src="{% static './img/blog-widget/1.jpg' %}" class="lc-avatar" alt="#" />
+                <div class="tw-text">
+                  <a href="">Maria Smith</a> <span>On</span> The best online game out there
+                </div>
+              </div>
+              <div class="lc-item">
+                <img src="{% static './img/blog-widget/2.jpg' %}" class="lc-avatar" alt="#" />
+                <div class="tw-text">
+                  <a href="">Maria Smith</a> <span>On</span> The best online game out there
+                </div>
+              </div>
+              <div class="lc-item">
+                <img src="{% static './img/blog-widget/3.jpg' %}" class="lc-avatar" alt="#" />
+                <div class="tw-text">
+                  <a href="">Maria Smith</a> <span>On</span> The best online game out there
+                </div>
+              </div>
+              <div class="lc-item">
+                <img src="{% static './img/blog-widget/4.jpg' %}" class="lc-avatar" alt="#" />
+                <div class="tw-text">
+                  <a href="">Maria Smith</a> <span>On</span> The best online game out there
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="widget-item">
+            <a href="#" class="add">
+              <img src="{% static './img/add.jpg' %}" alt="" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Blog page end-->
+
+<!-- Newsletter section -->
+<section class="newsletter-section">
+  <div class="container">
+    <h2>Subscribe to our newsletter</h2>
+    <form class="newsletter-form">
+      <input type="text" placeholder="ENTER YOUR E-MAIL" />
+      <button class="site-btn">
+        subscribe
+        <img src="{% static 'img/icons/double-arrow.png' %}" alt="#" />
+      </button>
+    </form>
+  </div>
+</section>
+<!-- Newsletter section end -->
+
+{% endblock content %}
