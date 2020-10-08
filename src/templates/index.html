@@ -16,7 +16,7 @@
       <div class="container">
         <h2 style="font-size: 3rem">{{ obj.title }}</h2>
         <p>{{ obj.overview }}</p>
-        <a href="#" class="site-btn"
+        <a href="{{ obj.get_absolute_url }}" class="site-btn"
           >Read More <img src="{% static 'img/icons/double-arrow.png' %}" alt="#"
         /></a>
       </div>
@@ -40,7 +40,7 @@
           </div>
           <h3>{{ obj.title }}</h3>
           <p>{{ obj.overview }}</p>
-          <a href="#" class="read-more"
+          <a href="{{ obj.get_absolute_url }}" class="read-more"
             >Read More <img src="{% static 'img/icons/double-arrow.png' %}" alt="#"
           /></a>
         </div>
@@ -79,7 +79,7 @@
             </div>
             <h3>{{ obj.title }}</h3>
             <p>{{ obj.overview }}</p>
-            <a href="#" class="read-more"
+            <a href="{{ obj.get_absolute_url }}" class="read-more"
               >Read More <img src="{% static 'img/icons/double-arrow.png' %}" alt="#"
             /></a>
           </div>
@@ -163,7 +163,7 @@
       </div>
       <h3>{{ obj.title }}</h3>
       <p>{{ obj.overview }}</p>
-      <a href="#" class="read-more"
+      <a href="{{ obj.get_absolute_url }}" class="read-more"
         >Read More <img src="{% static 'img/icons/double-arrow.png' %}" alt="#"
       /></a>
     </div>

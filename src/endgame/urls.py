@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from posts.views import index, blog, post, contact, games, reviewslist, search
 
 urlpatterns = [
@@ -12,7 +12,8 @@ urlpatterns = [
     path('contact/', contact),
     path('games/', games),
     path('search/', search, name='search'),
-    path('reviewslist/', reviewslist)
+    path('reviewslist/', reviewslist),
+    path('tinymce/', include('tinymce.urls')),
 
 ]
 

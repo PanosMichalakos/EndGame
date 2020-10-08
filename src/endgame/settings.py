@@ -27,7 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'posts',
-    'marketing'
+    'marketing',
+    'tinymce'
 ]
 
 MIDDLEWARE = [
@@ -114,3 +115,11 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_in_env')]
 VENV_PATH = os.path.dirname(BASE_DIR)
 STATIC_ROOT = os.path.join(VENV_PATH, 'static_root')
 MEDIA_ROOT = os.path.join(VENV_PATH, 'media_root')
+
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tinymce/tinymce.min.js")
+TINYMCE_COMPRESSOR = False
+
+
+# Tinymce
+
+TINYMCE_DEFAULT_CONFIG = {'theme': "simple", 'relative_urls': False}
