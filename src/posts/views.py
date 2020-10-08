@@ -16,7 +16,7 @@ def search(request):
         ).distinct()
 
     category_count = get_category_count()
-    trending = Post.objects.order_by('comment_count')[0:4]
+    trending = Post.objects.order_by('comment_count')[0:7]
     paginator = Paginator(queryset, 4)
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
@@ -47,7 +47,7 @@ def index(request):
     category_count = get_category_count()
     featured = Post.objects.filter(featured=True)
     latest = Post.objects.filter(review=False).order_by('-timestamp')[0:4]
-    trending = Post.objects.order_by('comment_count')[0:4]
+    trending = Post.objects.order_by('comment_count')[0:7]
     topnews = Post.objects.filter(top_stories=True)
     latestvideo = Post.objects.filter(video=True).order_by('-timestamp')[0:1]
     latestreview = Post.objects.filter(review=True).order_by('-timestamp')[0:1]
@@ -73,7 +73,7 @@ def index(request):
 def blog(request):
     category_count = get_category_count()
     postlist = Post.objects.all()
-    trending = Post.objects.order_by('comment_count')[0:4]
+    trending = Post.objects.order_by('comment_count')[0:7]
     paginator = Paginator(postlist, 4)
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
@@ -98,7 +98,9 @@ def blog(request):
 
 def post(request, id):
     post = get_object_or_404(Post, id=id)
+    trending = Post.objects.order_by('comment_count')[0:7]
     context = {
+        'trending': trending,
         'post': post
     }
     return render(request, 'post.html', context)
